@@ -5,15 +5,41 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #ffa500;
+  color: gray;
 }
 
+body {
+  color: gray;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 .homeGetStarted {
-  margin-top: 500px;
-  text-align: center;
-  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+  padding-left: 150px;
+  color: gray;
 }
+.homeGetStarted button {
+  margin-top: 30px;
+  padding: 20px 20px;
+  background-color: transparent;
+  border-radius: 20px;
+}
+.footer {
+  height: 20.2vh;
+  background-color: #ffd700;
+  padding: 40px;
+}
+.link {
+  text-decoration: none;
+  padding: 20px;
+  color: gray;
+  font-size: large;
+}
+/* @media (max-width: 1000px) {
+  .Aboutpage {
+    display: block;
+  }
+} */

@@ -1,25 +1,28 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import img1 from "../images/pocketpayHome.png";
+import Footer from "./Footer";
 import About from "./About";
 const Home = () => {
   return (
     <div>
-      <Container fluid style={{ backgroundColor: "#FFD700", color: "#FFA500" }}>
+      <Container fluid style={{ backgroundColor: "#87ceeb" }}>
         <Row>
-          <Col className="homeGetStarted">
-            <h1>Get your financies off your mind</h1>
-            <p>
-              Automate your financial plan with set-and-forget money tools that
-              fit right into your daily life.
-            </p>
-            <button>Get Started</button>
-          </Col>
           <Col>
-            <img src={img1} />
+            <div className="homeGetStarted">
+              <h1>Get your financies off your mind</h1>
+              <p>
+                Automate your financial plan with set-and-forget money tools
+                that fit right into your daily life.
+              </p>
+              <button>Get Started</button>
+            </div>
+          </Col>
+          <Col style={{ backgroundColor: "#87CEEB" }}>
+            <img src="../images/pocketpayHome.png" />
           </Col>
         </Row>
       </Container>
+      <Footer />
     </div>
   );
 };

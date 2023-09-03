@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// App.js
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "./screens/Home";
+import UploadMoneyScreen from "./screens/UploadMoneyScreen";
+import SavingsScreen from "./screens/Savings";
+import Dashboard from "./screens/Dashboard"; // Import Dashboard
+import Budgeting from "./screens/Budgeting"; // Import Budgeting
+import SignUpScreen from "./screens/SignUp";
 
-export default function App() {
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="SignUp">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="UploadMoney" component={UploadMoneyScreen} />
+        <Stack.Screen name="Budgeting" component={Budgeting} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+        <Stack.Screen name="Savings" component={SavingsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;

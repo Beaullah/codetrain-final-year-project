@@ -11,6 +11,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Welcome to PocketPay</Text>
+        <Text style={styles.title}>Welcome to PocketPay</Text>
       </View>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: "#FFCB05" }]}

@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { FontAwesome, FontAwesome5, Entypo } from "@expo/vector-icons";
 
 const HomeScreen = ({ navigation }) => {
   // Define a function to navigate to the specified screen
@@ -10,14 +11,16 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Welcome to PocketPay</Text>
-        <Text style={styles.title}>Welcome to PocketPay</Text>
+        <Text style={styles.title}>Welcome to UserName</Text>
       </View>
+
       <TouchableOpacity
         style={[styles.button, { backgroundColor: "#FFCB05" }]}
         onPress={() => navigateToScreen("UploadMoney")}
       >
         <View style={styles.buttonContent}>
+          <FontAwesome name="money" size={24} color="black" />
+
           {/* <Image
             source={require("./path-to-upload-image.png")}
             style={styles.buttonImage}
@@ -30,11 +33,12 @@ const HomeScreen = ({ navigation }) => {
         onPress={() => navigateToScreen("Savings")}
       >
         <View style={styles.buttonContent}>
+          <FontAwesome5 name="piggy-bank" size={24} color="black" />
           {/* <Image
             source={require("./path-to-savings-image.png")}
             style={styles.buttonImage}
           /> */}
-          <Text style={styles.buttonText}>Savings</Text>
+          <Text style={styles.buttonText}>Savingsss</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -42,6 +46,7 @@ const HomeScreen = ({ navigation }) => {
         onPress={() => navigateToScreen("Dashboard")}
       >
         <View style={styles.buttonContent}>
+          <FontAwesome name="dashboard" size={24} color="black" />
           {/* <Image
             source={require("./path-to-dashboard-image.png")}
             style={styles.buttonImage}
@@ -54,6 +59,7 @@ const HomeScreen = ({ navigation }) => {
         onPress={() => navigateToScreen("Budgeting")}
       >
         <View style={styles.buttonContent}>
+          <Entypo name="suitcase" size={24} color="black" />
           {/* <Image
             source={require("./path-to-budgeting-image.png")}
             style={styles.buttonImage}
@@ -79,10 +85,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: "#FFCB05",
+    width: "50%",
   },
   button: {
     backgroundColor: "#FFCB05",
-    padding: 20,
+    padding: 10,
     borderRadius: 5,
     marginHorizontal: 16,
     marginVertical: 10,

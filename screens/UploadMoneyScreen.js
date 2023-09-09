@@ -7,14 +7,17 @@ import {
   StyleSheet,
 } from "react-native";
 
-const UploadMoneyScreen = () => {
+const UploadMoneyScreen = ({ navigation }) => {
   const [amount, setAmount] = useState(""); // State to store the input amount
 
   const handleUploadMoney = () => {
     // Handle the logic to upload money (e.g., make an API call to process the transaction)
     // You can add your implementation here
+    const uploadedMoney = 1000; // Replace this with the actual uploaded amount
+    navigation.navigate("Budgeting", { uploadedMoney });
     console.log(`Uploading ${amount} dollars...`);
   };
+  // Inside the function that handles money upload
 
   return (
     <View style={styles.container}>

@@ -1,6 +1,14 @@
 // screens/SignUpScreen.js
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import Logo from "../assets/Logo.png";
 
 const SignUpScreen = ({ navigation }) => {
@@ -14,9 +22,13 @@ const SignUpScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={Logo} style={{ height: 200, width: 200, marginTop: 0 }} />
+      <Image
+        source={require("../assets/UndrawLogo.png")}
+        style={{ height: 200, width: 200 }}
+      />
+      {/* <Image source={Logo} style={{ height: 200, width: 200, marginTop: 0 }} /> */}
       <Text style={styles.title} numberOfLines={2} textAlign="center">
-        Welcome
+        Manage Your Money With PocketPay
       </Text>
       <TextInput
         style={styles.input}
@@ -31,7 +43,10 @@ const SignUpScreen = ({ navigation }) => {
         onChangeText={(text) => setPassword(text)}
         secureTextEntry
       />
-      <Button title="Sign Up" onPress={handleSignUp} color="#FFCB05" />
+      <TouchableOpacity style={styles.SignUp}>
+        <Text style={{ textAlign: "center" }}>Sign Up</Text>
+      </TouchableOpacity>
+
       <Text style={styles.loginText}>
         Already have an account?{" "}
         <Text
@@ -47,7 +62,6 @@ const SignUpScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     marginTop: 0,
     justifyContent: "center",
     alignItems: "center",
@@ -78,6 +92,15 @@ const styles = StyleSheet.create({
   loginLink: {
     color: "#007AFF", // You can use a different color for the link (blue)
     fontWeight: "bold",
+  },
+  SignUp: {
+    height: 20,
+    width: "50%",
+    padding: 20,
+    justifyContent: "center",
+    textAlign: "center",
+    backgroundColor: "#FFCB05",
+    borderRadius: 100,
   },
 });
 

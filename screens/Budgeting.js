@@ -8,12 +8,12 @@ const Budgeting = ({ route }) => {
   const [variableExpenses, setVariableExpenses] = useState("");
 
   // Extract uploaded money from the route params
-  const { uploadedMoneyScreen } = route.params;
+  // const { uploadedMoneyScreen } = route.params;
 
-  useEffect(() => {
-    // You can set the uploaded money as the initial income value
-    setIncome(uploadedMoney.toString());
-  }, [uploadedMoney]);
+  // useEffect(() => {
+  //   // You can set the uploaded money as the initial income value
+  //   setIncome(uploadedMoney.toString());
+  // }, [uploadedMoney]);
 
   const handleCalculate = () => {
     // Implement your budget calculation logic here

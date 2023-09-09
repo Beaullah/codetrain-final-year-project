@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, FlatList, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Button,
+  TextInput,
+  StyleSheet,
+} from "react-native";
 
 const Savings = () => {
   // Sample data for savings goals (replace with actual data)
@@ -21,6 +28,28 @@ const Savings = () => {
     console.log(`Auto-saving money to goal with ID: ${goalId}`);
   };
 
+  // State variables for adding new savings goals
+  const [newGoalName, setNewGoalName] = useState("");
+  const [newGoalTarget, setNewGoalTarget] = useState("");
+
+  // Function to add a new savings goal
+  const addSavingsGoal = () => {
+    // Create a new goal object
+    const newGoal = {
+      id: (savingsGoals.length + 1).toString(), // Generate a unique ID
+      name: newGoalName,
+      target: parseFloat(newGoalTarget),
+      saved: 0, // Initialize saved amount to 0
+    };
+
+    // Add the new goal to the existing goals
+    setSavingsGoals([...savingsGoals, newGoal]);
+
+    // Clear the input fields
+    setNewGoalName("");
+    setNewGoalTarget("");
+  };
+
   // Render each savings goal item
   const renderSavingsGoal = ({ item }) => (
     <View style={styles.goalItem}>
@@ -38,11 +67,29 @@ const Savings = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Savings Goals</Text>
+
+      {/* Input fields for adding new savings goals */}
+
+      {/* List of existing savings goals */}
       <FlatList
         data={savingsGoals}
         keyExtractor={(item) => item.id}
         renderItem={renderSavingsGoal}
       />
+      <TextInput
+        style={styles.input}
+        placeholder="Goal Name"
+        value={newGoalName}
+        onChangeText={(text) => setNewGoalName(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Goal Target Amount"
+        value={newGoalTarget}
+        onChangeText={(text) => setNewGoalTarget(text)}
+        keyboardType="numeric"
+      />
+      <Button title="Add Goal" onPress={addSavingsGoal} />
     </View>
   );
 };
@@ -73,6 +120,13 @@ const styles = StyleSheet.create({
   },
   goalSaved: {
     fontSize: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#888",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
   },
 });
 

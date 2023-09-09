@@ -1,53 +1,31 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const Dashboard = () => {
-  // Sample data for investments, credit cards, and loans (replace with actual data)
-  const investments = [
-    { name: "Investment 1", balance: 5000 },
-    { name: "Investment 2", balance: 8000 },
-  ];
-
-  const creditCards = [
-    { name: "Credit Card 1", balance: -1000 },
-    { name: "Credit Card 2", balance: -500 },
-  ];
-
-  const loans = [
-    { name: "Loan 1", balance: 2000 },
-    { name: "Loan 2", balance: 1500 },
-  ];
+  const [statistics, setStatistics] = useState({
+    totalIncome: 5000,
+    totalExpenses: 3500,
+    savings: 1500,
+  });
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Dashboard</Text>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Investments</Text>
-        {investments.map((investment, index) => (
-          <View key={index} style={styles.item}>
-            <Text>{investment.name}</Text>
-            <Text>${investment.balance}</Text>
-          </View>
-        ))}
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Credit Cards</Text>
-        {creditCards.map((creditCard, index) => (
-          <View key={index} style={styles.item}>
-            <Text>{creditCard.name}</Text>
-            <Text>${creditCard.balance}</Text>
-          </View>
-        ))}
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Loans</Text>
-        {loans.map((loan, index) => (
-          <View key={index} style={styles.item}>
-            <Text>{loan.name}</Text>
-            <Text>${loan.balance}</Text>
-          </View>
-        ))}
-      </View>
+
+      <TouchableOpacity style={styles.card}>
+        <Text style={styles.cardTitle}>Total Income</Text>
+        <Text style={styles.cardValue}>${statistics.totalIncome}</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.card}>
+        <Text style={styles.cardTitle}>Total Expenses</Text>
+        <Text style={styles.cardValue}>${statistics.totalExpenses}</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.card}>
+        <Text style={styles.cardTitle}>Savings</Text>
+        <Text style={styles.cardValue}>${statistics.savings}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -55,29 +33,30 @@ const Dashboard = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#F5F5F5",
     padding: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
+    color: "#333",
   },
-  section: {
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  item: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+  card: {
     backgroundColor: "#FFFFFF",
-    padding: 12,
-    borderRadius: 5,
+    padding: 16,
+    borderRadius: 10,
+    marginBottom: 16,
     elevation: 2,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#0077FF",
+  },
+  cardValue: {
+    fontSize: 20,
+    color: "#333",
   },
 });
 

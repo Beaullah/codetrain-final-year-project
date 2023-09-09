@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Image,
 } from "react-native";
 
 const UploadMoneyScreen = ({ navigation }) => {
@@ -21,7 +22,21 @@ const UploadMoneyScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.profile}>
+        <Image
+          source={require("../assets/Profile.jpeg")}
+          style={{
+            height: 80,
+            width: 80,
+
+            borderRadius: 100,
+          }}
+        />
+        <Text style={styles}>Ama Atta Aidoo</Text>
+      </View>
+
       <Text style={styles.title}>Upload Money</Text>
+
       <Text style={styles.label}>Enter the amount to upload:</Text>
       <TextInput
         style={styles.input}
@@ -43,9 +58,10 @@ const UploadMoneyScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 16,
     justifyContent: "center",
+
+    rowGap: 20,
   },
   title: {
     fontSize: 24,
@@ -74,6 +90,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#FFFFFF",
     textAlign: "center",
+  },
+  profile: {
+    flexDirection: "column",
+    justifyContent: "center",
+    marginHorizontal: 100,
   },
 });
 

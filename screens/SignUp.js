@@ -10,9 +10,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Logo from "../assets/Logo.png";
+import { globalStyles } from "../styles/Global";
 
-const SignUpScreen = ({ navigation }) => {
+const SignUp = ({ navigation }) => {
   const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignUp = () => {
@@ -21,15 +23,14 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("../assets/UndrawLogo.png")}
-        style={{ height: 200, width: 200 }}
-      />
-      {/* <Image source={Logo} style={{ height: 200, width: 200, marginTop: 0 }} /> */}
-      <Text style={styles.title} numberOfLines={2} textAlign="center">
-        Manage Your Money With PocketPay
-      </Text>
+    <View style={globalStyles.container}>
+      <View style={styles.greetings}>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+          It's a great Choice!
+        </Text>
+        <Text></Text>
+        <Text>We will make you reach your great potential</Text>
+      </View>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -38,24 +39,23 @@ const SignUpScreen = ({ navigation }) => {
       />
       <TextInput
         style={styles.input}
+        placeholder="Number"
+        value={number}
+        onChangeText={(text) => setNumber(text)}
+      />
+      <TextInput
+        style={styles.input}
         placeholder="Password"
         value={password}
         onChangeText={(text) => setPassword(text)}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.SignUp}>
-        <Text style={{ textAlign: "center" }}>Sign Up</Text>
+      <TouchableOpacity
+        style={globalStyles.Button}
+        onPress={() => navigation.navigate("Home")}
+      >
+        <Text>Sign Up</Text>
       </TouchableOpacity>
-
-      <Text style={styles.loginText}>
-        Already have an account?{" "}
-        <Text
-          style={styles.loginLink}
-          onPress={() => navigation.navigate("Home")}
-        >
-          Log In
-        </Text>
-      </Text>
     </View>
   );
 };
@@ -102,6 +102,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFCB05",
     borderRadius: 100,
   },
+  greetings: {
+    // marginHorizontal: 30,
+    marginBottom: 30,
+  },
 });
 
-export default SignUpScreen;
+export default SignUp;

@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#0077FF",
+    color: "#7C3FBF",
   },
   cardValue: {
     fontSize: 20,

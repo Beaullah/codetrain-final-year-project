@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-
+import { globalStyles } from "../styles/Global";
 const UploadMoneyScreen = ({ navigation }) => {
   const [amount, setAmount] = useState(""); // State to store the input amount
 
@@ -45,12 +45,8 @@ const UploadMoneyScreen = ({ navigation }) => {
         value={amount}
         onChangeText={(text) => setAmount(text)}
       />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleUploadMoney}
-        disabled={!amount}
-      >
-        <Text style={styles.buttonText}>Upload</Text>
+      <TouchableOpacity style={globalStyles.Button}>
+        <Text style={globalStyles.ButtonText}>Upload Money</Text>
       </TouchableOpacity>
     </View>
   );

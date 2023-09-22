@@ -51,10 +51,10 @@ const SignUp = ({ navigation }) => {
         secureTextEntry
       />
       <TouchableOpacity
-        style={globalStyles.Button}
+        style={styles.SignUpButton}
         onPress={() => navigation.navigate("Home")}
       >
-        <Text>Sign Up</Text>
+        <Text style={{ color: "#fff" }}>Sign Up</Text>
       </TouchableOpacity>
     </View>
   );
@@ -105,6 +105,17 @@ const styles = StyleSheet.create({
   greetings: {
     // marginHorizontal: 30,
     marginBottom: 30,
+  },
+  SignUpButton: {
+    flexDirection: "row",
+    height: 40,
+    padding: 10,
+    marginTop: 200,
+    marginHorizontal: 20,
+    marginVertical: 20,
+    borderRadius: 8,
+    justifyContent: "center",
+    backgroundColor: "#7E3FBF",
   },
 });
 

@@ -6,15 +6,16 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  ScrollView,
 } from "react-native";
 import { globalStyles } from "../styles/Global";
 
 const User = ({ navigation }) => {
   return (
-    <View style={globalStyles.container}>
+    <ScrollView style={globalStyles.container}>
       <View style={styles.LogoImage}>
         <Image
-          source={require("../assets/FinalLogo.png")}
+          source={require("../assets/Logo0.png")}
           style={globalStyles.Logo}
         />
       </View>
@@ -26,8 +27,11 @@ const User = ({ navigation }) => {
         <Text>With Pocketpay your finacials will be reached</Text>
       </View>
 
-      <TouchableOpacity style={globalStyles.Button}>
-        <Text style={globalStyles.ButtonText}>SignUp</Text>
+      <TouchableOpacity
+        style={globalStyles.Button}
+        onPress={() => navigation.navigate("SignUp")}
+      >
+        <Text style={globalStyles.ButtonText}>Sign Up</Text>
       </TouchableOpacity>
       <View style={globalStyles.loginContainer}>
         <Text
@@ -37,7 +41,7 @@ const User = ({ navigation }) => {
           Log In To Your Account
         </Text>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -46,7 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontWeight: 100,
     position: "relative",
-    top: 20,
+    top: 1,
   },
 });
 

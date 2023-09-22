@@ -8,6 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import { FontAwesome, FontAwesome5, Entypo } from "@expo/vector-icons";
+import { globalStyles } from "../styles/Global";
 
 const HomeScreen = ({ navigation }) => {
   // Define a function to navigate to the specified screen
@@ -22,10 +23,14 @@ const HomeScreen = ({ navigation }) => {
     { name: "paid investments", id: 5, Amount: 100 },
   ]);
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Ama Attah Aidoo</Text>
-        <View style={{ marginRight: 30 }}>
+        <View>
+          <Text>Welcome</Text>
+          <Text style={styles.title}>Ama Attah Aidoo</Text>
+        </View>
+
+        <View style={{ justifyContent: "flex-end" }}>
           <Image
             source={require("../assets/Profile.jpeg")}
             style={{
@@ -39,67 +44,118 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <View style={styles.TotalAmount}>
         <View style={styles.Amount}>
-          <Text>Total Balance Score: 12000</Text>
+          <Text style={{ color: "#ffff", fontSize: 20 }}>
+            Total Balance Available: 12000
+          </Text>
         </View>
       </View>
       <View style={styles.icons}>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: "#FFCB05" }]}
-          onPress={() => navigateToScreen("UploadMoney")}
-        >
-          <View style={styles.buttonContent}>
-            <FontAwesome name="money" size={24} color="black" />
-
-            {/* <Image
-            source={require("./path-to-upload-image.png")}
-            style={styles.buttonImage}
-          /> */}
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button]}
-          onPress={() => navigateToScreen("Savings")}
-        >
-          <View style={styles.buttonContent}>
-            <FontAwesome5 name="piggy-bank" size={24} color="black" />
-            {/* <Image
-            source={require("./path-to-savings-image.png")}
-            style={styles.buttonImage}
-          /> */}
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button]}
-          onPress={() => navigateToScreen("Dashboard")}
-        >
-          <View style={styles.buttonContent}>
-            <FontAwesome name="dashboard" size={24} color="black" />
-            {/* <Image
+        <View style={styles.icon1}>
+          <TouchableOpacity
+            style={[styles.button]}
+            onPress={() => navigateToScreen("Dashboard")}
+          >
+            <View style={styles.buttonContent}>
+              <FontAwesome name="dashboard" size={24} color="black" />
+              {/* <Image
             source={require("./path-to-dashboard-image.png")}
             style={styles.buttonImage}
           /> */}
+            </View>
+          </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <Text>Dashboard</Text>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button]}
-          onPress={() => navigateToScreen("Budgeting")}
-        >
-          <View style={styles.buttonContent}>
-            <Entypo name="suitcase" size={24} color="black" />
-            {/* <Image
+        </View>
+
+        {/* Upload Icon */}
+        <View style={styles.icon1}>
+          <TouchableOpacity
+            style={[styles.button]}
+            onPress={() => navigateToScreen("UploadMoney")}
+          >
+            <View style={styles.buttonContent}>
+              <FontAwesome name="money" size={24} color="" />
+
+              {/* <Image
+            source={require("./path-to-upload-image.png")}
+            style={styles.buttonImage}
+          /> */}
+            </View>
+          </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <Text>Savings</Text>
+          </View>
+        </View>
+        {/* Budgeting icon */}
+        <View style={styles.icon1}>
+          <TouchableOpacity
+            style={[styles.button]}
+            onPress={() => navigateToScreen("Budgeting")}
+          >
+            <View style={styles.buttonContent}>
+              <Entypo name="suitcase" size={24} color="black" />
+              {/* <Image
             source={require("./path-to-budgeting-image.png")}
             style={styles.buttonImage}
           /> */}
+            </View>
+          </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <Text>Budget</Text>
           </View>
-        </TouchableOpacity>
+        </View>
+        {/* Savings icon */}
+        <View>
+          <TouchableOpacity
+            style={[styles.button]}
+            onPress={() => navigateToScreen("Savings")}
+          >
+            <View style={styles.buttonContent}>
+              <FontAwesome5 name="piggy-bank" size={24} color="black" />
+              {/* <Image
+            source={require("./path-to-savings-image.png")}
+            style={styles.buttonImage}
+          /> */}
+            </View>
+          </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <Text>Savings</Text>
+          </View>
+        </View>
       </View>
+
+      {/* List of  Transactions */}
+
       <View style={styles.Trans}>
         <Text style={{ color: "grey", fontSize: 24 }}>Recent Transactions</Text>
       </View>
       <View style={styles.flatListContainer}>
         <FlatList
-          style={{ borderTopRightRadius: 100 }}
           data={transactions}
           renderItem={({ item }) => (
             <View>
@@ -122,7 +178,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     // paddingVertical: 16,
     // alignItems: "center",
   },
@@ -132,12 +188,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    width: "50%",
+
     fontWeight: "bold",
     // color: "#FFCB05",
   },
   button: {
-    backgroundColor: "#7E3FBF",
+    // backgroundColor: "#7E3FBF",
     padding: 10,
     width: 50,
     borderRadius: 5,
@@ -147,7 +203,7 @@ const styles = StyleSheet.create({
   buttonContent: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFCB05",
+    // backgroundColor: "#FFCB05",
   },
   buttonText: {
     fontSize: 18,
@@ -162,31 +218,31 @@ const styles = StyleSheet.create({
 
   TotalAmount: {
     padding: 10,
-
-    marginHorizontal: 10,
-    marginVertical: 10,
-
+    width: "100%",
+    height: 70,
     flexDirection: "row",
     justifyContent: "center",
+    backgroundColor: "#7E3FBF",
+    borderRadius: 20,
+    marginTop: 15,
   },
   Amount: {
-    height: 60,
-    padding: 15,
     borderRadius: 10,
-    backgroundColor: "orange",
+    width: "50%",
   },
   icons: {
     flexDirection: "row",
+    marginTop: 4,
   },
   List: {
     flexDirection: "row",
-    backgroundColor: "#FFCB05",
+    backgroundColor: "#7C3FBF",
     marginBottom: 10,
   },
   listItem: {
     padding: 15,
     textTransform: "uppercase",
-    color: "grey",
+    color: "#fff",
   },
   flatListContainer: {
     flex: 1,

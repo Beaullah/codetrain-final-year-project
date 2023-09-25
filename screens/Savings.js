@@ -6,6 +6,8 @@ import {
   Button,
   TextInput,
   StyleSheet,
+  Modal,
+  TouchableOpacity,
 } from "react-native";
 import { globalStyles } from "../styles/Global";
 import { FontAwesome, FontAwesome6, Entypo } from "@expo/vector-icons";
@@ -54,8 +56,25 @@ const Savings = () => {
   // Render each savings goal item
   const renderSavingsGoal = ({ item }) => (
     <View style={styles.goalItem}>
-      <Text style={styles.goalName}>{item.name}</Text>
-      <FontAwesome name="times" size={20} color="red" />
+      {/* edit and delete section */}
+      <View style={styles.goalSetting}>
+        <View>
+          <Text style={styles.goalName}>{item.name}</Text>
+        </View>
+
+        <View style={styles.iconfuntion}>
+          <Entypo name="pencil" size={20} color="green" />
+          <FontAwesome
+            name="times"
+            size={20}
+            color="red"
+            onPress={() =>
+              handleDeleteConfirmation(item)
+            } /* Handle delete confirmation */
+          />
+        </View>
+      </View>
+
       <Text style={styles.goalProgress}>
         Progress: {calculateProgress(item)}%
       </Text>
@@ -69,7 +88,33 @@ const Savings = () => {
       </View>
     </View>
   );
+  // State variables for delete confirmation
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(
+    false
+  );
 
+  // Function to handle delete confirmation
+  const handleDeleteConfirmation = (item) => {
+    setItemToDelete(item);
+    setDeleteConfirmationVisible(true);
+  };
+
+  // Function to delete a savings goal
+  const deleteSavingsGoal = () => {
+    // Filter out the item to be deleted
+    const updatedGoals = savingsGoals.filter((item) => item !== itemToDelete);
+    setSavingsGoals(updatedGoals);
+
+    // Close the delete confirmation modal
+    setDeleteConfirmationVisible(false);
+  };
+
+  // Function to cancel delete action
+  const cancelDelete = () => {
+    setItemToDelete(null);
+    setDeleteConfirmationVisible(false);
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Savings Goals</Text>
@@ -95,6 +140,34 @@ const Savings = () => {
           Add goal
         </Text>
       </View>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        visible={deleteConfirmationVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setDeleteConfirmationVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.deleteConfirmation}>
+            <Text>Are you sure you want to delete this goal?</Text>
+            <View style={styles.confirmationButtons}>
+              <TouchableOpacity
+                style={styles.confirmButton}
+                onPress={deleteSavingsGoal}
+              >
+                <Text style={{ color: "#fff" }}>Confirm</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.cancelButton}
+                onPress={cancelDelete}
+              >
+                <Text style={{ color: "#fff" }}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
 
       <FlatList
         data={savingsGoals}
@@ -148,6 +221,43 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: "center",
     backgroundColor: "#7E3FBF",
+  },
+  goalSetting: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  iconfuntion: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  deleteConfirmation: {
+    backgroundColor: "#FFFFFF",
+    padding: 20,
+    borderRadius: 5,
+  },
+  confirmationButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  confirmButton: {
+    backgroundColor: "red",
+    padding: 10,
+    borderRadius: 5,
+    width: "45%",
+    alignItems: "center",
+  },
+  cancelButton: {
+    backgroundColor: "#7E3FBF",
+    padding: 10,
+    borderRadius: 5,
+    width: "45%",
+    alignItems: "center",
   },
 });
 

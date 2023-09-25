@@ -29,17 +29,20 @@ const User = ({ navigation }) => {
 
       <TouchableOpacity
         style={globalStyles.Button}
-        onPress={() => navigation.navigate("SignUp")}
+        onPress={() => navigation.navigate("Sign Up")}
       >
         <Text style={globalStyles.ButtonText}>Sign Up</Text>
       </TouchableOpacity>
       <View style={globalStyles.loginContainer}>
         <Text
           style={{ color: "#7C3FBF" }}
-          onPress={() => navigation.navigate("SignUp")}
+          onPress={() => navigation.navigate("Log In")}
         >
           Log In To Your Account
         </Text>
+      </View>
+      <View style={styles.forgottenPassword}>
+        <Text style={{ fontSize: 12 }}>Forgotten password?</Text>
       </View>
     </ScrollView>
   );
@@ -51,6 +54,11 @@ const styles = StyleSheet.create({
     fontWeight: 100,
     position: "relative",
     top: 1,
+  },
+  forgottenPassword: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 5,
   },
 });
 

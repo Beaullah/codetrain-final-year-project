@@ -96,7 +96,7 @@ const HomeScreen = ({ navigation }) => {
               textAlign: "center",
             }}
           >
-            <Text>Savings</Text>
+            <Text>Income</Text>
           </View>
         </View>
         {/* Budgeting icon */}

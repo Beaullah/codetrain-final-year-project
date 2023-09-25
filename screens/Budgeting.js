@@ -10,6 +10,7 @@ import {
   ScrollView,
   Button,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { globalStyles } from "../styles/Global";
@@ -49,6 +50,28 @@ const Budgeting = () => {
     }
   };
 
+  // Function to edit a budget item
+  const editBudget = (id) => {
+    // Find the budget item with the given id
+    const budgetToEdit = budgets.find((item) => item.id === id);
+
+    // Populate input fields with the values of the budget item
+    setCategory(budgetToEdit.category);
+    setDescription(budgetToEdit.description);
+    setAmount(budgetToEdit.amount);
+
+    // Remove the budget item from the list
+    const updatedBudgets = budgets.filter((item) => item.id !== id);
+    setBudgets(updatedBudgets);
+  };
+
+  // Function to delete a budget item
+  const deleteBudget = (id) => {
+    // Remove the budget item from the list
+    const updatedBudgets = budgets.filter((item) => item.id !== id);
+    setBudgets(updatedBudgets);
+  };
+
   const addBudget = () => {
     if (category && description && amount) {
       // Create a new budget item object
@@ -76,10 +99,10 @@ const Budgeting = () => {
       {/* Title */}
       <View style={styles.budgetTitle}>
         <View>
-          <Text>Budget</Text>
+          <Text style={{ fontSize: 25 }}>Budget</Text>
         </View>
         <View>
-          <Text>Available Balance: 12000</Text>
+          <Text style={{ fontSize: 20 }}>Available Balance: 12000</Text>
         </View>
       </View>
 
@@ -121,7 +144,12 @@ const Budgeting = () => {
           style={styles.input}
           placeholder="Enter Amount"
           value={amount}
-          onChangeText={(number) => setAmount(number)}
+          onChangeText={(text) => {
+            // Regular expression to allow only numeric characters
+            const numericValue = text.replace(/[^0-9]/g, "");
+            setAmount(numericValue);
+          }}
+          keyboardType="numeric" // Set keyboardType to 'numeric'
         />
 
         <View style={styles.addBudgetButton}>
@@ -142,9 +170,30 @@ const Budgeting = () => {
             <Text style={styles.amount}>Amount: {item.amount}</Text>
             <Text style={styles.date}>Date: {item.date}</Text>
             <View style={styles.buttonsContainer}>
-              <Button title="Edit" onPress={() => editBudget(item.id)} />
-              <Button title="Delete" onPress={() => deleteBudget(item.id)} />
-              <Button title="Send" onPress={() => sendBudget(item.id)} />
+              <TouchableOpacity
+                style={styles.budgetSetting}
+                onPress={() => editBudget(item.id)}
+              >
+                <View>
+                  <Text style={{ color: "#fff" }}>Edit </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.budgetSetting}
+                onPress={() => deleteBudget(item.id)}
+              >
+                <View>
+                  <Text style={{ color: "#fff" }}>Delete</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.budgetSetting}
+                onPress={() => sendBudget(item.id)}
+              >
+                <View>
+                  <Text style={{ color: "#fff" }}>Send</Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         )}
@@ -211,6 +260,12 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  // the edit delte and send css
+  budgetSetting: {
+    backgroundColor: "#7E3FBF",
+    padding: 10,
+    borderRadius: 8,
   },
 });
 

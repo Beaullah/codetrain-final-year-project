@@ -7,7 +7,8 @@ import {
   TextInput,
   StyleSheet,
 } from "react-native";
-
+import { globalStyles } from "../styles/Global";
+import { FontAwesome, FontAwesome6, Entypo } from "@expo/vector-icons";
 const Savings = () => {
   // Sample data for savings goals (replace with actual data)
   const [savingsGoals, setSavingsGoals] = useState([
@@ -54,13 +55,18 @@ const Savings = () => {
   const renderSavingsGoal = ({ item }) => (
     <View style={styles.goalItem}>
       <Text style={styles.goalName}>{item.name}</Text>
+      <FontAwesome name="times" size={20} color="red" />
       <Text style={styles.goalProgress}>
         Progress: {calculateProgress(item)}%
       </Text>
       <Text style={styles.goalSaved}>
         Saved: ${item.saved} of ${item.target}
       </Text>
-      <Button title="Auto-Save" onPress={() => autoSaveMoney(item.id)} />
+      <View style={styles.savingButton}>
+        <Text style={{ color: "#fff" }} onPress={() => autoSaveMoney(item.id)}>
+          Auto-Save
+        </Text>
+      </View>
     </View>
   );
 
@@ -71,11 +77,6 @@ const Savings = () => {
       {/* Input fields for adding new savings goals */}
 
       {/* List of existing savings goals */}
-      <FlatList
-        data={savingsGoals}
-        keyExtractor={(item) => item.id}
-        renderItem={renderSavingsGoal}
-      />
       <TextInput
         style={styles.input}
         placeholder="Goal Name"
@@ -89,7 +90,17 @@ const Savings = () => {
         onChangeText={(text) => setNewGoalTarget(text)}
         keyboardType="numeric"
       />
-      <Button title="Add Goal" onPress={addSavingsGoal} />
+      <View style={styles.savingButton}>
+        <Text style={{ color: "#fff" }} onPress={addSavingsGoal}>
+          Add goal
+        </Text>
+      </View>
+
+      <FlatList
+        data={savingsGoals}
+        keyExtractor={(item) => item.id}
+        renderItem={renderSavingsGoal}
+      />
     </View>
   );
 };
@@ -98,6 +109,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    gap: 15,
   },
   title: {
     fontSize: 24,
@@ -127,6 +139,15 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
+  },
+  savingButton: {
+    flexDirection: "row",
+    padding: 10,
+    marginHorizontal: 20,
+    marginVertical: 20,
+    borderRadius: 8,
+    justifyContent: "center",
+    backgroundColor: "#7E3FBF",
   },
 });
 

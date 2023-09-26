@@ -3,14 +3,14 @@ import {
   View,
   Text,
   FlatList,
-  Button,
   TextInput,
+  Button,
   StyleSheet,
   Modal,
   TouchableOpacity,
 } from "react-native";
-import { globalStyles } from "../styles/Global";
-import { FontAwesome, FontAwesome6, Entypo } from "@expo/vector-icons";
+import { FontAwesome, Entypo } from "@expo/vector-icons";
+
 const Savings = () => {
   // Sample data for savings goals (replace with actual data)
   const [savingsGoals, setSavingsGoals] = useState([
@@ -18,6 +18,12 @@ const Savings = () => {
     { id: "2", name: "Vacation", target: 2000, saved: 1000 },
     { id: "3", name: "New Laptop", target: 1000, saved: 750 },
   ]);
+
+  // State variables for editing
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [editedGoal, setEditedGoal] = useState(null);
+  const [editedGoalName, setEditedGoalName] = useState("");
+  const [editedGoalTarget, setEditedGoalTarget] = useState("");
 
   // Function to calculate the progress percentage for a goal
   const calculateProgress = (goal) => {
@@ -53,6 +59,34 @@ const Savings = () => {
     setNewGoalTarget("");
   };
 
+  // Function to handle editing a goal
+  const handleEditGoal = (goal) => {
+    setEditModalVisible(goal);
+    setEditedGoalName(goal.name);
+    setEditedGoalTarget(goal.target.toString());
+    setEditModalVisible(true);
+  };
+
+  // Function to save the edited goal
+  const saveEditedGoal = () => {
+    if (editedGoal) {
+      const updatedGoals = savingsGoals.map((goal) =>
+        goal.id === editedGoal.id
+          ? {
+              ...goal,
+              name: editedGoalName,
+              target: parseFloat(editedGoalTarget),
+            }
+          : goal
+      );
+      setSavingsGoals(updatedGoals);
+      setEditedGoal(null);
+      setEditedGoalName("");
+      setEditedGoalTarget("");
+      setEditModalVisible(false);
+    }
+  };
+
   // Render each savings goal item
   const renderSavingsGoal = ({ item }) => (
     <View style={styles.goalItem}>
@@ -62,15 +96,22 @@ const Savings = () => {
           <Text style={styles.goalName}>{item.name}</Text>
         </View>
 
-        <View style={styles.iconfuntion}>
-          <Entypo name="pencil" size={20} color="green" />
+        <View style={styles.iconFunction}>
+          <TouchableOpacity onPress={() => handleEditGoal(item)}>
+            <FontAwesome name="pencil" size={20} color="green" />
+          </TouchableOpacity>
+          {/* <FontAwesome
+            onPress={() => handleEditGoal(item)}
+            name="pencil"
+            size={20}
+            color="green"
+          /> */}
+
           <FontAwesome
             name="times"
             size={20}
             color="red"
-            onPress={() =>
-              handleDeleteConfirmation(item)
-            } /* Handle delete confirmation */
+            onPress={() => handleDeleteConfirmation(item)}
           />
         </View>
       </View>
@@ -88,6 +129,7 @@ const Savings = () => {
       </View>
     </View>
   );
+
   // State variables for delete confirmation
   const [itemToDelete, setItemToDelete] = useState(null);
   const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(
@@ -102,8 +144,7 @@ const Savings = () => {
 
   // Function to delete a savings goal
   const deleteSavingsGoal = () => {
-    // Filter out the item to be deleted
-    const updatedGoals = savingsGoals.filter((item) => item !== itemToDelete);
+    const updatedGoals = savingsGoals.filter((goal) => goal !== itemToDelete);
     setSavingsGoals(updatedGoals);
 
     // Close the delete confirmation modal
@@ -115,13 +156,12 @@ const Savings = () => {
     setItemToDelete(null);
     setDeleteConfirmationVisible(false);
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Savings Goals</Text>
 
       {/* Input fields for adding new savings goals */}
-
-      {/* List of existing savings goals */}
       <TextInput
         style={styles.input}
         placeholder="Goal Name"
@@ -135,11 +175,7 @@ const Savings = () => {
         onChangeText={(text) => setNewGoalTarget(text)}
         keyboardType="numeric"
       />
-      <View style={styles.savingButton}>
-        <Text style={{ color: "#fff" }} onPress={addSavingsGoal}>
-          Add goal
-        </Text>
-      </View>
+      <Button title="Add goal" onPress={addSavingsGoal} />
 
       {/* Delete Confirmation Modal */}
       <Modal
@@ -161,6 +197,47 @@ const Savings = () => {
               <TouchableOpacity
                 style={styles.cancelButton}
                 onPress={cancelDelete}
+              >
+                <Text style={{ color: "#fff" }}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal
+        visible={editModalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setEditModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.editModal}>
+            <Text>Edit Goal</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Goal Name"
+              value={editedGoalName}
+              onChangeText={(text) => setEditedGoalName(text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Goal Target Amount"
+              value={editedGoalTarget}
+              onChangeText={(text) => setEditedGoalTarget(text)}
+              keyboardType="numeric"
+            />
+            <View style={styles.editButtonsContainer}>
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={saveEditedGoal}
+              >
+                <Text style={{ color: "#fff" }}>Save</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() => setEditModalVisible(false)}
               >
                 <Text style={{ color: "#fff" }}>Cancel</Text>
               </TouchableOpacity>
@@ -226,7 +303,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  iconfuntion: {
+  iconFunction: {
     flexDirection: "row",
     gap: 10,
   },
@@ -253,6 +330,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cancelButton: {
+    backgroundColor: "#7E3FBF",
+    padding: 10,
+    borderRadius: 5,
+    width: "45%",
+    alignItems: "center",
+  },
+  editModal: {
+    backgroundColor: "#FFFFFF",
+    padding: 20,
+    borderRadius: 5,
+  },
+  editButtonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  editButton: {
     backgroundColor: "#7E3FBF",
     padding: 10,
     borderRadius: 5,

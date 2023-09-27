@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
+import { globalStyles } from "../styles/Global";
 
 const Savings = () => {
   // Sample data for savings goals (replace with actual data)
@@ -25,6 +26,16 @@ const Savings = () => {
   const [editedGoalName, setEditedGoalName] = useState("");
   const [editedGoalTarget, setEditedGoalTarget] = useState("");
 
+  // State variables for delete confirmation
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(
+    false
+  );
+
+  // State variables for adding new savings goals
+  const [newGoalName, setNewGoalName] = useState("");
+  const [newGoalTarget, setNewGoalTarget] = useState("");
+
   // Function to calculate the progress percentage for a goal
   const calculateProgress = (goal) => {
     return ((goal.saved / goal.target) * 100).toFixed(2);
@@ -36,10 +47,6 @@ const Savings = () => {
     // You can add your implementation here
     console.log(`Auto-saving money to goal with ID: ${goalId}`);
   };
-
-  // State variables for adding new savings goals
-  const [newGoalName, setNewGoalName] = useState("");
-  const [newGoalTarget, setNewGoalTarget] = useState("");
 
   // Function to add a new savings goal
   const addSavingsGoal = () => {
@@ -61,10 +68,10 @@ const Savings = () => {
 
   // Function to handle editing a goal
   const handleEditGoal = (goal) => {
-    setEditModalVisible(goal);
+    setEditedGoal(goal); // Set the goal being edited
     setEditedGoalName(goal.name);
     setEditedGoalTarget(goal.target.toString());
-    setEditModalVisible(true);
+    setEditModalVisible(true); // Show the edit modal
   };
 
   // Function to save the edited goal
@@ -85,6 +92,27 @@ const Savings = () => {
       setEditedGoalTarget("");
       setEditModalVisible(false);
     }
+  };
+
+  // Function to handle delete confirmation
+  const handleDeleteConfirmation = (item) => {
+    setItemToDelete(item);
+    setDeleteConfirmationVisible(true);
+  };
+
+  // Function to delete a savings goal
+  const deleteSavingsGoal = () => {
+    const updatedGoals = savingsGoals.filter((goal) => goal !== itemToDelete);
+    setSavingsGoals(updatedGoals);
+
+    // Close the delete confirmation modal
+    setDeleteConfirmationVisible(false);
+  };
+
+  // Function to cancel delete action
+  const cancelDelete = () => {
+    setItemToDelete(null);
+    setDeleteConfirmationVisible(false);
   };
 
   // Render each savings goal item
@@ -130,33 +158,6 @@ const Savings = () => {
     </View>
   );
 
-  // State variables for delete confirmation
-  const [itemToDelete, setItemToDelete] = useState(null);
-  const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(
-    false
-  );
-
-  // Function to handle delete confirmation
-  const handleDeleteConfirmation = (item) => {
-    setItemToDelete(item);
-    setDeleteConfirmationVisible(true);
-  };
-
-  // Function to delete a savings goal
-  const deleteSavingsGoal = () => {
-    const updatedGoals = savingsGoals.filter((goal) => goal !== itemToDelete);
-    setSavingsGoals(updatedGoals);
-
-    // Close the delete confirmation modal
-    setDeleteConfirmationVisible(false);
-  };
-
-  // Function to cancel delete action
-  const cancelDelete = () => {
-    setItemToDelete(null);
-    setDeleteConfirmationVisible(false);
-  };
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Savings Goals</Text>
@@ -175,7 +176,11 @@ const Savings = () => {
         onChangeText={(text) => setNewGoalTarget(text)}
         keyboardType="numeric"
       />
-      <Button title="Add goal" onPress={addSavingsGoal} />
+      <View style={styles.addGoalButton}>
+        <Text style={{ color: "#ffff" }} onPress={addSavingsGoal}>
+          Add goal
+        </Text>
+      </View>
 
       {/* Delete Confirmation Modal */}
       <Modal
@@ -352,6 +357,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: "45%",
     alignItems: "center",
+  },
+  addGoalButton: {
+    flexDirection: "row",
+    height: 40,
+    padding: 10,
+
+    marginHorizontal: 20,
+    marginVertical: 20,
+    borderRadius: 8,
+    justifyContent: "center",
+    backgroundColor: "#7E3FBF",
   },
 });
 

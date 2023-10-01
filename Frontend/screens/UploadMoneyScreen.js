@@ -8,18 +8,19 @@ import {
   Image,
 } from "react-native";
 import { globalStyles } from "../styles/Global";
+import { useRef } from "react";
+import { Paystack, paystackProps } from "react-native-paystack-webview";
+// import PayStack from "./PayStack";
 const UploadMoneyScreen = ({ navigation }) => {
-  const [amount, setAmount] = useState(""); // State to store the input amount
-
-  const handleUploadMoney = () => {
-    // Handle the logic to upload money (e.g., make an API call to process the transaction)
-    // You can add your implementation here
-    const uploadedMoney = 1000; // Replace this with the actual uploaded amount
-    navigation.navigate("Budgeting", { uploadedMoney });
-    console.log(`Uploading ${amount} dollars...`);
+  const [amount, setAmount] = useState("");
+  const paystackWebViewRef = useRef(paystackProps.PayStackRef);
+  const sendMoney = () => {
+    paystackWebViewRef.current.startTransaction();
   };
-  // Inside the function that handles money upload
-
+  const handlePaymentSuccess = () => {
+    if (sendMoney) navigation.navigate("Home", { amount: amount });
+    return;
+  };
   return (
     <View style={styles.container}>
       <View style={styles.profile}>
@@ -35,19 +36,37 @@ const UploadMoneyScreen = ({ navigation }) => {
         <Text style={styles}>Ama Atta Aidoo</Text>
       </View>
 
-      <Text style={styles.title}>Upload Money</Text>
-
       <Text style={styles.label}>Enter the amount to upload:</Text>
       <TextInput
         style={styles.input}
         placeholder="Amount (e.g., 100)"
         keyboardType="numeric"
         value={amount}
-        onChangeText={(text) => setAmount(text)}
+        onChangeText={(Text) => setAmount(Text)}
       />
-      <TouchableOpacity style={globalStyles.Button}>
-        <Text style={globalStyles.ButtonText}>Upload Money</Text>
+
+      <Paystack
+        paystackKey="pk_test_db491326018f5a2e5bdfbcd97a67cb5a76729d5d"
+        paystackSecretKey="sk_test_5182a38c0acaf241bee771522baa457c4efa480a"
+        billingEmail="bonita19fummey@gmail.com"
+        billingMobile="0551442563"
+        billingName="Ama Attah"
+        currency="GHS"
+        amount={amount}
+        onCancel={(e) => {
+          // handle response here
+        }}
+        onSuccess={handlePaymentSuccess}
+        ref={paystackWebViewRef}
+      />
+
+      <TouchableOpacity onPress={sendMoney}>
+        <Text>Pay Now</Text>
       </TouchableOpacity>
+
+      {/* <TouchableOpacity style={globalStyles.Button}>
+        <Text style={{ color: "#fff" }}>Pay Now</Text>
+      </TouchableOpacity> */}
     </View>
   );
 };

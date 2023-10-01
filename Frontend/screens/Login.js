@@ -113,4 +113,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect({}, {})(Login);
+export default connect(null, {})(Login);

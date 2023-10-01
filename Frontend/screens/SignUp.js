@@ -11,16 +11,27 @@ import {
 } from "react-native";
 import Logo from "../assets/Logo.png";
 import { globalStyles } from "../styles/Global";
-import { Connect, connect } from "react-redux";
+import { connect } from "react-redux";
+import { createEmailAccout, registerError } from "../redux/Actions/authActions";
 
-const SignUp = ({ navigation }) => {
+const SignUp = ({ navigation, auth }) => {
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [comfirmpassword, setcomfirmPassword] = useState("");
 
   const handleSignUp = () => {
     // Implement user registration logic here
+    if (password !== comfirmpassword) {
+      alert("Password doesn't match!");
+      return;
+      // registerError("Passwords do not match");
+      // return;
+    }
+
     // You can use an API to register the user
+
+    navigation.navigate("Home");
   };
 
   return (
@@ -32,31 +43,41 @@ const SignUp = ({ navigation }) => {
         <Text></Text>
         <Text>We will make you reach your great potential</Text>
       </View>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Number"
-        value={number}
-        onChangeText={(text) => setNumber(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
-      />
-      <TouchableOpacity
-        style={styles.SignUpButton}
-        onPress={() => navigation.navigate("Home")}
-      >
-        <Text style={{ color: "#fff" }}>Sign Up</Text>
-      </TouchableOpacity>
+      <View>
+        {auth.error.register && (
+          <Text style={{ color: "red" }}>{auth.error.register}</Text>
+        )}
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Number"
+          value={number}
+          onChangeText={(text) => setNumber(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Comfirm password"
+          value={comfirmpassword}
+          onChangeText={(text) => setcomfirmPassword(text)}
+          secureTextEntry
+        />
+
+        <TouchableOpacity style={styles.SignUpButton} onPress={handleSignUp}>
+          <Text style={{ color: "#fff" }}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -119,5 +140,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#7E3FBF",
   },
 });
-
-export default connect({}, {})(SignUp);
+const mapStateToProp = (state) => {
+  return { auth: state };
+};
+export default connect(mapStateToProp, { createEmailAccout, registerError })(
+  SignUp
+);

@@ -8,13 +8,14 @@ import {
   FlatList,
 } from "react-native";
 import { FontAwesome, FontAwesome5, Entypo } from "@expo/vector-icons";
+import UploadMoneyScreen from "./UploadMoneyScreen";
 import { globalStyles } from "../styles/Global";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, route }) => {
   // Define a function to navigate to the specified screen
-  const navigateToScreen = (screenName) => {
-    navigation.navigate(screenName);
-  };
+
+  const { amount } = route.params || { amount: "" };
+
   const [transactions, useTransactions] = useState([
     { name: "paid school fees", id: 1, Amount: 100 },
     { name: "paid geocory", id: 2, Amount: 100 },
@@ -45,7 +46,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.TotalAmount}>
         <View style={styles.Amount}>
           <Text style={{ color: "#ffff", fontSize: 20 }}>
-            Total Balance Available: 12000
+            Total Balance Available: {amount}
           </Text>
         </View>
       </View>
@@ -53,7 +54,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.icon1}>
           <TouchableOpacity
             style={[styles.button]}
-            onPress={() => navigateToScreen("Dashboard")}
+            onPress={() => navigation.navigate("Dashboard")}
           >
             <View style={styles.buttonContent}>
               <FontAwesome name="dashboard" size={24} color="black" />
@@ -78,7 +79,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.icon1}>
           <TouchableOpacity
             style={[styles.button]}
-            onPress={() => navigateToScreen("UploadMoney")}
+            onPress={() => navigation.navigate("UploadMoney")}
           >
             <View style={styles.buttonContent}>
               <FontAwesome name="money" size={24} color="" />
@@ -100,17 +101,18 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
         {/* Budgeting icon */}
-        <View style={styles.icon1}>
+
+        {/* <View style={styles.icon1}>
           <TouchableOpacity
             style={[styles.button]}
             onPress={() => navigateToScreen("Budgeting")}
           >
             <View style={styles.buttonContent}>
               <Entypo name="suitcase" size={24} color="black" />
-              {/* <Image
+              <Image
             source={require("./path-to-budgeting-image.png")}
             style={styles.buttonImage}
-          /> */}
+          />
             </View>
           </TouchableOpacity>
           <View
@@ -122,12 +124,13 @@ const HomeScreen = ({ navigation }) => {
           >
             <Text>Budget</Text>
           </View>
-        </View>
+        </View> */}
+
         {/* Savings icon */}
         <View>
           <TouchableOpacity
             style={[styles.button]}
-            onPress={() => navigateToScreen("Savings")}
+            onPress={() => navigation.navigate("Savings")}
           >
             <View style={styles.buttonContent}>
               <FontAwesome5 name="piggy-bank" size={24} color="black" />

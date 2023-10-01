@@ -5,7 +5,8 @@ export function createEmailAccout(email, password) {
     try {
       const user = await firebase
         .auth()
-        .createUserWithEmailPassword(email, password);
+        .createUserWithEmailAndPassword(email, password);
+      console.log(user);
       dispatch(loggedIn(user));
     } catch (error) {
       console.log(error);
@@ -17,7 +18,7 @@ export function loginEmailAccout(email, password) {
     try {
       const user = await firebase
         .auth()
-        .signInWithEmailPassword(email, password);
+        .signInWithEmailAndPassword(email, password);
       dispatch(loggedIn(user));
     } catch (error) {
       console.log(error);
@@ -44,5 +45,12 @@ function loggedIn(user) {
 function loggedOut() {
   return {
     type: "LOGGED_OUT",
+  };
+}
+
+export function registerError(error) {
+  return {
+    type: "REGISTER_ERROR",
+    payload: error,
   };
 }
